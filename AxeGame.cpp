@@ -10,7 +10,8 @@ int main()
     while (WindowShouldClose() == false)
     {
         BeginDrawing();
-        ClearBackground(RED);
+        ClearBackground(WHITE);
+        DrawCircle(width / 2, 200 / 2, 25, BLUE);
         EndDrawing();
     }
 }
