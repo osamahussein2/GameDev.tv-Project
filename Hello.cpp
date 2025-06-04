@@ -4,7 +4,7 @@
     Name: Osama Hussein
 */
 
-#include <cstdio>
+/*#include <cstdio>
 
 int main()
 {
@@ -16,4 +16,4 @@ int main()
 
     // Favourite hobby
     printf("My favourite hobby is playing video games.\n");
-}
+}*/
