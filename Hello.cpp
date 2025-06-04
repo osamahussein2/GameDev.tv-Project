@@ -1,3 +1,9 @@
+/* 
+    Source file file: Hello.cpp
+    Program prints out a statement to the terminal
+    Name: Osama Hussein
+*/
+
 #include <cstdio>
 
 int main()
