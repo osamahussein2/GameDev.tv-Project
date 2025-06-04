@@ -11,6 +11,8 @@ int main()
     int circle_x{175};
     int circle_y{100};
 
+    int circle_radius{25};
+
     SetTargetFPS(60);
     while (WindowShouldClose() == false)
     {
@@ -18,16 +20,18 @@ int main()
         ClearBackground(WHITE);
 
         // Game logic begins
-        DrawCircle(circle_x, circle_y, 25, BLUE);
+        DrawCircle(circle_x, circle_y, circle_radius, BLUE);
 
-        if (IsKeyDown(KEY_D))
+        // Subtract circle radius to it to make sure the whole circle is visible in the window boundaries
+        if (IsKeyDown(KEY_D) && circle_x < 350 - circle_radius)
         {
-            circle_x = circle_x + 10;
+            circle_x = circle_x + 10; // Move right
         }
 
-        if (IsKeyDown(KEY_A))
+        // Add circle radius to it to make sure the whole circle is visible in the window boundaries
+        if (IsKeyDown(KEY_A) && circle_x > circle_radius)
         {
-            circle_x = circle_x - 10;
+            circle_x = circle_x - 10; // Move left
         }
 
         // Game logic ends
