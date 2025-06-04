@@ -17,6 +17,8 @@ int main()
     int axe_x{400};
     int axe_y{0};
 
+    int direction{10};
+
     SetTargetFPS(60);
     while (WindowShouldClose() == false)
     {
@@ -28,7 +30,12 @@ int main()
         DrawRectangle(axe_x, axe_y, 50, 50, RED);
 
         // Move the axe
-        axe_y += 10;
+        axe_y += direction;
+
+        if (axe_y > 450 || axe_y < 0)
+        {
+            direction = -direction;
+        }
 
         // Subtract circle radius to it to make sure the whole circle is visible in the window boundaries
         if (IsKeyDown(KEY_D) && circle_x < 350 - circle_radius)
