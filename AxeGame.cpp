@@ -33,34 +33,44 @@ int main()
 
     int direction{10};
 
+    bool collision_with_axe{false};
+
     SetTargetFPS(60);
     while (WindowShouldClose() == false)
     {
         BeginDrawing();
         ClearBackground(WHITE);
-
-        // Game logic begins
-        DrawCircle(circle_x, circle_y, circle_radius, BLUE);
-        DrawRectangle(axe_x, axe_y, axe_length, axe_length, RED);
-
-        // Move the axe
-        axe_y += direction;
-
-        if (axe_y > height || axe_y < 0)
+        
+        if (collision_with_axe == true)
         {
-            direction = -direction;
+            DrawText("Game Over!", 400, 200, 20, RED);
         }
 
-        // Subtract circle radius to it to make sure the whole circle is visible in the window boundaries
-        if (IsKeyDown(KEY_D) && circle_x < width - circle_radius)
+        else
         {
-            circle_x += 10; // Move right
-        }
-
-        // Add circle radius to it to make sure the whole circle is visible in the window boundaries
-        if (IsKeyDown(KEY_A) && circle_x > circle_radius)
-        {
-            circle_x -= 10; // Move left
+            // Game logic begins
+            DrawCircle(circle_x, circle_y, circle_radius, BLUE);
+            DrawRectangle(axe_x, axe_y, axe_length, axe_length, RED);
+        
+            // Move the axe
+            axe_y += direction;
+        
+            if (axe_y > height || axe_y < 0)
+            {
+                direction = -direction;
+            }
+        
+            // Subtract circle radius to it to make sure the whole circle is visible in the window boundaries
+            if (IsKeyDown(KEY_D) && circle_x < width - circle_radius)
+            {
+                circle_x += 10; // Move right
+            }
+        
+            // Add circle radius to it to make sure the whole circle is visible in the window boundaries
+            if (IsKeyDown(KEY_A) && circle_x > circle_radius)
+            {
+                circle_x -= 10; // Move left
+            }
         }
 
         // Game logic ends
