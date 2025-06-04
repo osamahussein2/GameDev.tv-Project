@@ -7,7 +7,7 @@ int main()
 
     InitWindow(width, 200, "Osama's Window");
 
-    while (true)
+    while (WindowShouldClose() == false)
     {
         BeginDrawing();
         ClearBackground(RED);
