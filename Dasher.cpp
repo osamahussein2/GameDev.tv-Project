@@ -24,7 +24,11 @@ int main()
     Vector2 nebulaPos{windowWidth, windowHeight - nebulaRec.height};
 
     // Nebula velocity in pixels per second
-    int nebulaVel{-600};
+    int nebulaVel{-200};
+
+    int nebulaFrame{};
+    const float nebulaUpdateTime{1.0 / 12.0};
+    float nebulaRunningTime{};
 
     // Scarfy variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
@@ -82,6 +86,19 @@ int main()
 
         // Update scarfy position
         scarfyPos.y += velocity * dT;
+
+        nebulaRunningTime += dT;
+
+        if (nebulaRunningTime >= nebulaUpdateTime)
+        {
+            nebulaRunningTime = 0.0f;
+
+            // Update nebula's animation frame
+            nebulaRec.x = nebulaFrame * nebulaRec.width;
+            nebulaFrame++;
+            
+            if (nebulaFrame > 7) nebulaFrame = 0;
+        }
 
         if (!isInAir)
         {
