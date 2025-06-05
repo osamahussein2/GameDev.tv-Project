@@ -8,13 +8,15 @@ int main()
 
     InitWindow(windowWidth, windowHeight, "Dapper Dasher!");
 
-    // Acceleration due to gravity (pixels/frame)
-    const int gravity{1};
+    // Acceleration due to gravity (pixels/second) second
+    const int gravity{1'000};
     
     int velocity{0};
 
     bool isInAir{false};
-    const int jumpVel{-22};
+
+    // Jump velocity (pixels/second)
+    const int jumpVel{-600};
 
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
 
@@ -31,6 +33,9 @@ int main()
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
+        // Delta time (time since last frame)
+        const float dT = GetFrameTime();
+
         // Start drawing
         BeginDrawing();
         ClearBackground(WHITE);
@@ -46,7 +51,7 @@ int main()
         else
         {
             // Apply gravity
-            velocity += gravity;
+            velocity += gravity * dT;
         }
 
         if (IsKeyPressed(KEY_SPACE) && isInAir == false)
@@ -57,7 +62,7 @@ int main()
         }
 
         // Update position
-        scarfyPos.y += velocity;
+        scarfyPos.y += velocity * dT;
 
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
