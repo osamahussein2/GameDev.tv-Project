@@ -91,6 +91,9 @@ int main()
     scarfyData.updateTime = 1.0 / 12.0;
     scarfyData.runningTime = 0.0;
 
+    Texture2D background = LoadTexture("textures/far-buildings.png");
+    float bgX{};
+
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
@@ -100,6 +103,15 @@ int main()
         // Start drawing
         BeginDrawing();
         ClearBackground(WHITE);
+
+        bgX -= 20 * dT;
+        if (bgX <= -background.width * 2) bgX = 0.0;
+
+        Vector2 bg1Pos{bgX, 0.0};
+        DrawTextureEx(background, bg1Pos, 0.0, 2.0, WHITE);
+        
+        Vector2 bg2Pos{bgX + background.width * 2, 0.0};
+        DrawTextureEx(background, bg2Pos, 0.0, 2.0, WHITE);
 
         if (isOnGround(scarfyData, windowDimensions[1]))
         {
@@ -156,6 +168,7 @@ int main()
 
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
+    UnloadTexture(background);
 
     CloseWindow();
 }
