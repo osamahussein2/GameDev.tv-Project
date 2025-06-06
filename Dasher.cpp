@@ -72,7 +72,7 @@ int main()
         nebulae[i].updateTime = 1.0 / 16.0;
     }
 
-    float finishLine{ nebulae[sizeOfNebulae - 1].pos.x };
+    float finishLine{ nebulae[sizeOfNebulae - 1].pos.x + 100 };
 
     // Nebula velocity in pixels per second
     int nebulaVel{-200};
@@ -214,18 +214,28 @@ int main()
         if (collision)
         {
             // Lose the game
+            DrawText("Game Over!", windowDimensions[0] / 2.5, windowDimensions[1] / 2.5, 20, WHITE);
         }
 
         else 
         {
-            for (int i = 0; i < sizeOfNebulae; i++)
+            if (scarfyData.pos.x < finishLine)
             {
-                // Draw nebula
-                DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+                for (int i = 0; i < sizeOfNebulae; i++)
+                {
+                    // Draw nebula
+                    DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+                }
+
+                // Draw scarfy
+                DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
             }
 
-            // Draw scarfy
-            DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+            else
+            {
+                // Win the game
+                DrawText("You Win!", windowDimensions[0] / 2.5, windowDimensions[1] / 2.5, 20, WHITE);
+            }
         }
 
         // End drawing
