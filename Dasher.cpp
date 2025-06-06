@@ -72,6 +72,8 @@ int main()
         nebulae[i].updateTime = 1.0 / 16.0;
     }
 
+    float finishLine{ nebulae[sizeOfNebulae - 1].pos.x };
+
     // Nebula velocity in pixels per second
     int nebulaVel{-200};
 
@@ -99,6 +101,8 @@ int main()
 
     Texture2D foreground = LoadTexture("textures/foreground.png");
     float fgX{};
+
+    bool collision{false};
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -168,6 +172,9 @@ int main()
             nebulae[i].pos.x += nebulaVel * dT;
         }
 
+        // Update finish line
+        finishLine += nebulaVel * dT;
+
         // Update scarfy position
         scarfyData.pos.y += velocity * dT;
 
@@ -181,14 +188,45 @@ int main()
             scarfyData = updateAnimData(scarfyData, dT, 5);
         }
 
-        for (int i = 0; i < sizeOfNebulae; i++)
+        for (AnimData nebula : nebulae)
         {
-            // Draw nebula
-            DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            float pad{50};
+            Rectangle nebRec{ 
+                nebula.pos.x + pad, 
+                nebula.pos.y + pad, 
+                nebula.rec.width - 2 * pad, 
+                nebula.rec.height - 2 * pad 
+            };
+
+            Rectangle scarfyRec {
+                scarfyData.pos.x, 
+                scarfyData.pos.y, 
+                scarfyData.rec.width, 
+                scarfyData.rec.height
+            };
+
+            if (CheckCollisionRecs(nebRec, scarfyRec))
+            {
+                collision = true;
+            }
         }
 
-        // Draw scarfy
-        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        if (collision)
+        {
+            // Lose the game
+        }
+
+        else 
+        {
+            for (int i = 0; i < sizeOfNebulae; i++)
+            {
+                // Draw nebula
+                DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            }
+
+            // Draw scarfy
+            DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        }
 
         // End drawing
         EndDrawing();
