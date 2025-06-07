@@ -19,6 +19,18 @@ int main()
         (float)windowHeight / 2.0f - 4.0f * (0.5f * (float)knight.height)
     };
 
+    Texture2D knight_idle = LoadTexture("characters/knight_idle_spritesheet.png");
+    Texture2D knight_run = LoadTexture("characters/knight_run_spritesheet.png");
+
+    // 1 is for facing right and -1 is for facing left
+    float rightLeft{1.f};
+
+    // Animation variables
+    float runningTime{};
+    int frame{};
+    const int maxFrame{6};
+    const float updateTime{1.f / 12.f};
+
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
@@ -35,12 +47,35 @@ int main()
         {
             // Set map to map position minus direction
             mapPos = Vector2Subtract(mapPos, Vector2Scale(Vector2Normalize(direction), speed));
+
+            // Terniary operator for condition checks (if true : else false)
+            direction.x < 0.f ? rightLeft = -1.f : rightLeft = 1.f;
+
+            knight = knight_run;
+        }
+
+        else
+        {
+            knight = knight_idle;
         }
 
         // Draw tha map
         DrawTextureEx(map, mapPos, 0.0, 4.0, WHITE);
 
-        Rectangle source{ 0.0f, 0.0f, (float)knight.width / 6.0f, (float)knight.height };
+        // Update animation frame
+        runningTime += GetFrameTime();
+
+        if (runningTime >= updateTime)
+        {
+            frame++;
+            runningTime = 0.f;
+
+            if (frame > maxFrame) frame = 0;
+        }
+
+        Rectangle source{ frame * (float)knight.width / 6.0f, 0.0f, 
+            rightLeft * (float)knight.width / 6.0f, (float)knight.height };
+
         Rectangle dest{ knightPos.x, knightPos.y, 4.0f * (float)knight.width / 6.0f, 4.0f * (float)knight.height };
 
         // Draw the character
