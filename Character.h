@@ -12,6 +12,8 @@ public:
     
     virtual void Tick(float deltaTime) override;
 
+    Vector2 getScreenPos() { return screenPos; }
+
 private:
     
 };
