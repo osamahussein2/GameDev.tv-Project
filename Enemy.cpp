@@ -20,6 +20,9 @@ void Enemy::Tick(float deltaTime)
     // Get toTarget
     velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
 
+    // Check length between enemy and target
+    if (Vector2Length(velocity) < radius) velocity = {};
+
     BaseCharacter::Tick(deltaTime);
 
     // If enemy overlaps character, make character take damage

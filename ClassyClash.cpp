@@ -21,10 +21,18 @@ int main()
         Prop{Vector2{400.f, 500.f}, LoadTexture("nature_tileset/Log.png")}
     };
 
-    Enemy goblin{Vector2{}, LoadTexture("characters/goblin_idle_spritesheet.png"),
+    Enemy goblin{Vector2{800.f, 300.f}, LoadTexture("characters/goblin_idle_spritesheet.png"),
     LoadTexture("characters/goblin_run_spritesheet.png")};
 
-    goblin.setTarget(&knight);
+    Enemy slime{Vector2{500.f, 700.f}, LoadTexture("characters/slime_idle_spritesheet.png"),
+    LoadTexture("characters/slime_run_spritesheet.png")};
+
+    Enemy* enemies[]{ &goblin, &slime };
+
+    for (Enemy* enemy : enemies)
+    {
+        enemy->setTarget(&knight);
+    }
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -78,14 +86,20 @@ int main()
             }
         }
 
-        goblin.Tick(GetFrameTime());
+        for (Enemy* enemy : enemies)
+        {
+            enemy->Tick(GetFrameTime());
+        }
 
         // If left mouse button is pressed and the knight's sword collides with the goblin
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            if (CheckCollisionRecs(goblin.getCollisionRec(), knight.getWeaponCollisionRec()))
+            for (Enemy* enemy : enemies) 
             {
-                goblin.setAlive(false); // Set goblin alive to false
+                if (CheckCollisionRecs(enemy->getCollisionRec(), knight.getWeaponCollisionRec()))
+                {
+                    enemy->setAlive(false);
+                }
             }
         }
 
