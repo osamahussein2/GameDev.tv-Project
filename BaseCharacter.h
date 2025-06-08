@@ -2,12 +2,15 @@
 #define BASECHARACTER_H
 
 #include "raylib.h"
+#include "raymath.h"
 
 class BaseCharacter
 {
 public:
     BaseCharacter();
     Vector2 getWorldPos() { return worldPos; }
+
+    virtual void Tick(float deltaTime);
 
     void undoMovement();
     Rectangle getCollisionRec();
