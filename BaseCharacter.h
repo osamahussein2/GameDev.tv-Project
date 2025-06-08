@@ -17,6 +17,9 @@ public:
 
     virtual Vector2 getScreenPos() = 0;
 
+    bool getAlive() {return alive; }
+    void setAlive(bool isAlive) { alive = isAlive; }
+
 protected:
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
     Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -43,6 +46,9 @@ protected:
     float scale{4.0f};
 
     Vector2 velocity{};
+
+private:
+    bool alive{true};
 };
 
 #endif

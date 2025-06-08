@@ -64,6 +64,15 @@ int main()
 
         goblin.Tick(GetFrameTime());
 
+        // If left mouse button is pressed and the knight's sword collides with the goblin
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            if (CheckCollisionRecs(goblin.getCollisionRec(), knight.getWeaponCollisionRec()))
+            {
+                goblin.setAlive(false); // Set goblin alive to false
+            }
+        }
+
         EndDrawing();
     }
 
