@@ -10,6 +10,8 @@ public:
     void setScreenPos(int winWidth, int winHeight);
     void Tick(float deltaTime);
 
+    void undoMovement();
+
 private:
     Texture2D texture{LoadTexture("characters/knight_idle_spritesheet.png")};
     Texture2D idle{LoadTexture("characters/knight_idle_spritesheet.png")};
@@ -31,4 +33,6 @@ private:
 
     float width{};
     float height{};
+
+    Vector2 worldPosLastFrame{};
 };
