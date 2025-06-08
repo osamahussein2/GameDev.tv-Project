@@ -12,6 +12,8 @@ public:
 
     void setTarget(Character* newTarget);
     
+    virtual Vector2 getScreenPos() override;
+    
 private:
     Character* target;
 };
