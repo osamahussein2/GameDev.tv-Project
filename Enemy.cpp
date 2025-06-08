@@ -21,6 +21,12 @@ void Enemy::Tick(float deltaTime)
     velocity = Vector2Subtract(target->getScreenPos(), getScreenPos());
 
     BaseCharacter::Tick(deltaTime);
+
+    // If enemy overlaps character, make character take damage
+    if (CheckCollisionRecs(target->getCollisionRec(), getCollisionRec()))
+    {
+        target->takeDamage(damagePerSec * deltaTime);
+    }
 }
 
 Vector2 Enemy::getScreenPos()
